@@ -13,3 +13,30 @@ dev = [
     "pytest>=9.0.2",
     "ruff>=0.14.11",
 ]
+
+[tool.mypy]
+ignore_missing_imports = true
+disallow_untyped_defs = false
+
+
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+fix = true
+
+[tool.ruff.lint]
+select = [
+    "E",  # pycodestyle errors
+    "F",  # pyflakes
+    "I",  # isort (import sorting)
+]
+ignore = [
+    "E501",  # line length (handled by black)
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["ml_project_foundations"]
+
+[tool.black]
+line-length = 120
+target-version = ["py312"]
