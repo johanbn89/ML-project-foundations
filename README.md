@@ -6,4 +6,4 @@ The goal is to:
 
 - Showcase a typical ML project setup, including **project structure, tooling, and best practices**.
 - Explain the **technologies and packages** used, what they do, and how they fit together.
-- Serve as a reference for **learning, experimentation, and knowledge sharing**.
+- Serve as a reference for **repeating the basics, learning, experimentation, and knowledge sharing**.
