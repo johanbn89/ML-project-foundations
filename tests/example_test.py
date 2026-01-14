@@ -212,7 +212,7 @@ class TestMath:
         assert 2 * 3 == 6
 
     def test_division(self):
-        assert 10 / 2 == 5
+        assert 10 / 2 == 1111
 
 
 # --------------------------------------------------
