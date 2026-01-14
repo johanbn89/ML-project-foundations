@@ -2,8 +2,9 @@ name: Run tests with pytest
 
 on:
   pull_request:
-    branches:
-      - main
+    branches: [main]
+  push:
+    branches: [main]
       
 jobs:
   test:
