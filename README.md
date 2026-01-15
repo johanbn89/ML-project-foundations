@@ -102,6 +102,7 @@ On every pull request, the CI pipeline:
   - Tests with `pytest`
 
 This ensures that all code merged into the repository meets the same quality and correctness standards.
+When using astral-sh/setup-uv in GitHub Actions, uv automatically persists its internal cache between workflow runs.
 
 ## Configuration
 
