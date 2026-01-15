@@ -144,3 +144,55 @@ uv run mypy src
 uv run python -m ml_project_foundations.some_module
 uv run python -m ml_project_foundations.some_file
 ```
+
+## Development Tooling & Project Hygiene
+
+This project prioritizes consistency and reproducibility over editor-specific
+behavior.
+
+All formatting, linting, and type checking are enforced at commit time and in CI,
+ensuring identical results regardless of editor or local configuration.
+
+### Editor Setup (VSCode)
+
+VSCode is my current choice of editor. A typical setup for this kind of projects.
+
+Useful extensions include:
+
+- **Python** (official Microsoft extension)
+- **GitLens** (optional, for Git insights)
+
+Formatting, linting, and type checking are intentionally **not** handled by editor
+extensions. Instead, they are enforced via:
+
+- `pre-commit` hooks
+- GitHub Actions (CI)
+
+This avoids editor-specific discrepancies and ensures a single source of truth.
+
+### Editor Hygiene
+
+When installing dependencies or running Python code, various generated artifacts
+are created (e.g. `__pycache__`, `.egg-info` directories and *.pyc files).
+
+These files are expected but should not be interacted with directly.
+
+To reduce noise in the editor, the following exclusions are configured in
+`.vscode/settings.json`:
+
+```json
+{
+  "files.exclude": {
+    "**/.git": true,
+    "**/__pycache__": true,
+    "**/*.pyc": true,
+    "**/*.egg-info": true,
+    "**/.pytest_cache": true,
+    "**/.mypy_cache": true,
+    "**/.ruff_cache": true
+  }
+}
+
+
+
+
