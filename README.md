@@ -208,6 +208,57 @@ To reduce noise in the editor, the following exclusions are configured in
 }
 ```
 
+## Version Control & Branching Strategy
+
+This repository follows a simple and opinionated Git workflow to keep the history
+clean and the `main` branch stable.
+
+Workflows and conventions may vary between teams and projects. The choices here
+reflect a reasonable default rather than a strict prescription.
+
+Repository rules and branch protections are configured directly via the GitHub
+web interface.
+
+### Main Branch Protection
+
+The `main` branch is protected and represents the current stable state of the
+project.
+
+Direct pushes to `main` are disabled. All changes must go through a pull request
+(PR).
+
+Branch protection rules enforce:
+
+- All CI checks passing (tests, linting, type checking)
+- No force-pushes to `main`
+- No direct commits to `main`
+
+This ensures that every change merged into `main` meets the same quality standards.
+
+### Pull Requests
+
+All development is done on feature branches.
+
+Pull requests are used to:
+
+- Run the full CI pipeline in a clean environment
+- Review changes before merging
+- Provide a clear audit trail of why changes were made
+
+Once a pull request is merged, the feature branch is deleted to keep the repository
+tidy and avoid stale branches.
+
+### Rulesets
+
+Repository rulesets are used to centrally define and enforce:
+
+- Branch protection rules
+- Required status checks(eg. passing pytest)
+- Merge requirements
+
+Using rulesets ensures consistent enforcement across branches and avoids relying
+on individual developer discipline.
+
 
 
 
