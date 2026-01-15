@@ -147,11 +147,24 @@ uv run python -m ml_project_foundations.some_file
 
 ## Development Tooling & Project Hygiene
 
-This project prioritizes consistency and reproducibility over editor-specific
+This project prioritizes **consistency and reproducibility** over editor-specific
 behavior.
 
-All formatting, linting, and type checking are enforced at commit time and in CI,
-ensuring identical results regardless of editor or local configuration.
+All formatting, linting, and type checking are enforced at **commit time** and in
+**CI**, ensuring identical results regardless of editor or local configuration.
+
+### Repository Hygiene
+
+Installing dependencies and running Python code produces various generated
+artifacts. These files are expected, but they should **not** be committed to the
+repository.
+
+The following entries are included in `.gitignore` to prevent repository bloat:
+
+```gitignore
+__pycache__/
+*.pyc
+*.egg-info/
 
 ### Editor Setup (VSCode)
 
@@ -192,6 +205,8 @@ To reduce noise in the editor, the following exclusions are configured in
     "**/.ruff_cache": true
   }
 }
+
+
 
 
 
