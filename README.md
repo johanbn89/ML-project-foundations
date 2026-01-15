@@ -165,6 +165,7 @@ The following entries are included in `.gitignore` to prevent repository bloat:
 __pycache__/
 *.pyc
 *.egg-info/
+```
 
 ### Editor Setup (VSCode)
 
@@ -205,6 +206,7 @@ To reduce noise in the editor, the following exclusions are configured in
     "**/.ruff_cache": true
   }
 }
+```
 
 
 
