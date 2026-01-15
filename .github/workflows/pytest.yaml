@@ -14,34 +14,18 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v4
 
-      # 2️⃣ Set up Python
-      - name: Set up Python
-        id: setup-python
-        uses: actions/setup-python@v5
+      # 2️⃣ Set up uv (with caching enabled)
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v3
         with:
-          python-version: "3.11"
+          enable-cache: true
 
-      # 3️⃣ Install uv
-      - name: Install uv
-        run: |
-          curl -LsSf https://astral.sh/uv/install.sh | sh
-          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
-
-      # 4️⃣ Cache uv downloads
-      - name: Cache uv
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/uv
-          key: uv-${{ runner.os }}-py311-${{ hashFiles('uv.lock') }}
-          restore-keys: |
-            uv-${{ runner.os }}-py311-
-
-      # 5️⃣ Install dependencies
+      # 3️⃣ Install Python and dependencies
       - name: Install dependencies
         run: |
           uv sync
 
-      # 6️⃣ Run pytest
+      # 4️⃣ Run pytest
       - name: Run tests
         run: |
           uv run pytest -v
