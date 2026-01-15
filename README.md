@@ -127,11 +127,12 @@ cd ml-project-foundations
 ```
 ### 3. Install Python and dependencies
 ```bash
-uv python install
 uv sync
 ```
-Notice that uv sync,
+Notice that `uv sync`:
+
 - Creates (or reuses) the project virtual environment
+- Ensures a compatible Python version is available (based on `.python-version`), installing it if necessary
 - Installs all dependencies from `pyproject.toml` / `uv.lock`
 - Installs the current project in **editable mode**, meaning:
   - Changes to the source code are immediately reflected
