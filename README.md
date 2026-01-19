@@ -65,6 +65,14 @@ To enforce consistent and high-quality code, the project uses:
 - **mypy** for static type checking
 - **pre-commit** hooks to enforce formatting, linting, and type checks on every commit
 
+First time using **pre-commit** 
+```bash
+uv add pre-commit –group dev (only needed for setup not for new users)
+uv run pre-commit install
+uv run pre-commit run --all-files (to test it)
+```
+
+
 This ensures that code style, correctness, and type safety are handled automatically.
 
 ## Type Checking
