@@ -25,8 +25,11 @@ build-backend = "setuptools.build_meta"
 where = ["src"]
 
 [tool.mypy]
+# If a dependency doesn’t ship type hints, don’t fail my build because of it
 ignore_missing_imports = true
 disallow_untyped_defs = false
+cache_dir = ".mypy_cache"
+incremental = true
 
 
 [tool.ruff]

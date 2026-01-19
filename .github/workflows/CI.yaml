@@ -1,0 +1,52 @@
+name: Run checks
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+
+      - name: Sync environment
+        run: |
+          uv sync --frozen
+
+      - name: Get Python and mypy versions
+        run: |
+          echo "PY_VERSION=$(uv run python -c 'import sys; print(f\"{sys.version_info.major}.{sys.version_info.minor}\")')" >> $GITHUB_ENV
+          echo "MYPY_VERSION=$(uv run mypy --version | awk '{print $2}')" >> $GITHUB_ENV
+
+      - name: Cache mypy
+        uses: actions/cache@v4
+        with:
+          path: .mypy_cache
+          key: mypy-${{ runner.os }}-py${{ env.PY_VERSION }}-mypy${{ env.MYPY_VERSION }}-${{ hashFiles('**/*.py', 'pyproject.toml') }}
+          restore-keys: |
+            mypy-${{ runner.os }}-py${{ env.PY_VERSION }}-mypy${{ env.MYPY_VERSION }}-
+
+      - name: Ruff
+        run: |
+          uv run ruff check .
+
+      - name: Black
+        run: |
+          uv run black --check .
+
+      - name: Mypy
+        run: |
+          uv run mypy src
+
+      - name: Pytest
+        run: |
+          uv run pytest -v
