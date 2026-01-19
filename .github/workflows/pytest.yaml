@@ -23,7 +23,7 @@ jobs:
       # 3️⃣ Install Python and dependencies
       - name: Install dependencies
         run: |
-          uv sync
+          uv sync --frozen
 
       # 4️⃣ Run pytest
       - name: Run tests
