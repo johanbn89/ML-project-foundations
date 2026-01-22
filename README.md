@@ -1,6 +1,9 @@
+# ML-Project-Foundations
+
 This repository demonstrates how to structure a **production-ready, end-to-end machine learning project**.
 
 The focus is not only on models, but on the **infrastructure and engineering practices** that make ML projects maintainable, testable, and scalable over time.
+
 
 ## Project Goals
 
@@ -64,14 +67,6 @@ To enforce consistent and high-quality code, the project uses:
 - **Ruff** for linting
 - **mypy** for static type checking
 - **pre-commit** hooks to enforce formatting, linting, and type checks on every commit
-
-First time using **pre-commit** 
-```bash
-uv add pre-commit –group dev (only needed for setup not for new users)
-uv run pre-commit install
-uv run pre-commit run --all-files (to test it)
-```
-
 
 This ensures that code style, correctness, and type safety are handled automatically.
 
@@ -170,15 +165,9 @@ repository.
 The following entries are included in `.gitignore` to prevent repository bloat:
 
 ```gitignore
-# Python
-dist/
-build/
 __pycache__/
 *.pyc
 *.egg-info/
-
-# VSCode
-.vscode/
 ```
 
 ### Editor Setup (VSCode)
@@ -264,37 +253,17 @@ tidy and avoid stale branches.
 
 ### Rulesets
 
-**Repository rulesets** are used to centrally define and enforce:
+Repository rulesets are used to centrally define and enforce:
 
-- Branch protection rules  
-- Required status checks (e.g. passing `pytest`)  
-- Merge requirements  
+- Branch protection rules
+- Required status checks(eg. passing pytest)
+- Merge requirements
 
-Using rulesets ensures **consistent enforcement across branches** and avoids relying on
-individual developer discipline or local configuration.
+Using rulesets ensures consistent enforcement across branches and avoids relying
+on individual developer discipline.
 
----
 
-## Required status checks and naming
 
-GitHub enforces required status checks **at the job level**, not at the workflow or step level.
-
-This means the **job name in the GitHub Actions workflow must exactly match** the required
-status check configured in the repository ruleset or branch protection settings.
-
-### Example
-
-```yaml
-name: Run checks  # Workflow name (for humans)
-
-on:
-  pull_request:
-    branches:
-      - main
-
-jobs:
-  checks:          # THIS is the required status check name
-    runs-on: ubuntu-latest
 
 
 
