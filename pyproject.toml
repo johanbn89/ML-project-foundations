@@ -5,6 +5,7 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
+   "ml-project-foundations-data-quarry",
    "numpy>=2.4.1",
 ]
 
@@ -16,6 +17,9 @@ dev = [
     "ruff>=0.14.11",
     "pre-commit>=4.5.1",
 ]
+
+[tool.uv.sources]
+ml-project-foundations-data-quarry = { git = "https://github.com/johanbn89/ML-project-foundations-data-quarry", rev = "66d7e46" }
 
 [build-system]
 requires = ["setuptools>=68"]
@@ -53,3 +57,4 @@ known-first-party = ["ml_project_foundations"]
 [tool.black]
 line-length = 120
 target-version = ["py312"]
+
