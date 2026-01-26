@@ -1,0 +1,4 @@
+run:
+  stages: [fit]
+  # mode: RUN  ## Added this later
+  ckpt_path: null

@@ -1,0 +1,31 @@
+accelerator: auto # cpu, gpu, tpu, mps, auto
+devices: auto # int, list, or "auto"
+strategy: auto # ddp, fsdp, deepspeed, auto
+precision: 32 # 32, 16, bf16
+
+max_epochs: 5
+min_epochs: 1
+max_steps: -1 # set >0 to limit by steps instead of epochs
+
+log_every_n_steps: 50
+enable_progress_bar: true
+enable_model_summary: true
+
+deterministic: false
+benchmark: true
+
+#gradient_clip_val: 0.0
+#gradient_clip_algorithm: norm
+
+accumulate_grad_batches: 1
+
+# Validation / sanity checks
+check_val_every_n_epoch: 1
+num_sanity_val_steps: 2
+
+# Debugging
+fast_dev_run: false
+overfit_batches: 0.0
+
+# Callbacks
+callbacks: null

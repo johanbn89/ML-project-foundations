@@ -1,0 +1,13 @@
+# DataLoader configuration
+_target_: ml_project_foundations.data.data_module.DataModule
+data_cfg:
+  batch_size: 1
+  num_workers: 1
+  pin_memory: true
+  shuffle: true
+  drop_last: false
+  # Dataset configuration
+  name: dataset2
+  tag: dataset2-v4
+  components: [raw, target]
+  transforms: null
