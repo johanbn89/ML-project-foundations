@@ -18,14 +18,18 @@ jobs:
         with:
           enable-cache: true
 
-      - name: Sync environment
+      - name: Sync environment (CI override for local path deps)
         run: |
-          uv sync --frozen
+          uv sync --frozen --extra CI
 
       - name: Get Python and mypy versions
+        shell: bash
         run: |
-          echo "PY_VERSION=$(uv run python -c 'import sys; print(f\"{sys.version_info.major}.{sys.version_info.minor}\")')" >> $GITHUB_ENV
-          echo "MYPY_VERSION=$(uv run mypy --version | awk '{print $2}')" >> $GITHUB_ENV
+          PY_VERSION=$(uv run python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")
+          MYPY_VERSION=$(uv run mypy --version | awk '{print $2}')
+
+          echo "PY_VERSION=$PY_VERSION" >> "$GITHUB_ENV"
+          echo "MYPY_VERSION=$MYPY_VERSION" >> "$GITHUB_ENV"
 
       - name: Cache mypy
         uses: actions/cache@v4

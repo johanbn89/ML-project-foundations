@@ -1,0 +1,5 @@
+_target_: ml_project_foundations.models.model1.Model1
+model_cfg:
+  input_dim: 5
+  target_dim: 1
+  lr: 1e-3

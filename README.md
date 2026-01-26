@@ -129,8 +129,11 @@ cd ml-project-foundations
 ```
 ### 3. Install Python and dependencies
 ```bash
-uv sync
+python scripts/setup_local.py
+uv sync --all-groups
 ```
+setup_local.py install local deps, eg. ml-project-foundations-data-quarry.
+
 Notice that `uv sync`:
 
 - Creates (or reuses) the project virtual environment
