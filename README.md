@@ -2,7 +2,7 @@
 
 This repository demonstrates how to structure a **production-ready, end-to-end machine learning project**.
 
-The focus is not on models, dataset and training code per say, but on the **infrastructure and engineering practices** that make ML projects maintainable, testable, and scalable over time.
+The focus is not on models, dataset and training code per say, but on the **infrastructure and engineering practices** that make ML projects **maintainable, testable, and scalable over time.**
 
 ## Repository Setup
 
