@@ -12,18 +12,28 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
+        with:
+          path: ML-project-foundations
+
+      - name: Check out data quarry
+        uses: actions/checkout@v4
+        with:
+          repository: johanbn89/ML-project-foundations-data-quarry
+          path: ML-project-foundations-data-quarry
 
       - name: Set up uv
         uses: astral-sh/setup-uv@v3
         with:
           enable-cache: true
 
-      - name: Sync environment (CI override for local path deps)
+      - name: Sync environment
+        working-directory: ML-project-foundations
         run: |
-          uv sync --frozen --extra CI
+          uv sync --frozen --all-groups
 
       - name: Get Python and mypy versions
         shell: bash
+        working-directory: ML-project-foundations
         run: |
           PY_VERSION=$(uv run python -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")
           MYPY_VERSION=$(uv run mypy --version | awk '{print $2}')
@@ -34,23 +44,27 @@ jobs:
       - name: Cache mypy
         uses: actions/cache@v4
         with:
-          path: .mypy_cache
-          key: mypy-${{ runner.os }}-py${{ env.PY_VERSION }}-mypy${{ env.MYPY_VERSION }}-${{ hashFiles('**/*.py', 'pyproject.toml') }}
+          path: code/ML-project-foundations/.mypy_cache
+          key: mypy-${{ runner.os }}-py${{ env.PY_VERSION }}-mypy${{ env.MYPY_VERSION }}-${{ hashFiles('code/ML-project-foundations/**/*.py', 'code/ML-project-foundations/pyproject.toml') }}
           restore-keys: |
             mypy-${{ runner.os }}-py${{ env.PY_VERSION }}-mypy${{ env.MYPY_VERSION }}-
 
       - name: Ruff
+        working-directory: ML-project-foundations
         run: |
           uv run ruff check .
 
       - name: Black
+        working-directory: ML-project-foundations
         run: |
           uv run black --check .
 
       - name: Mypy
+        working-directory: ML-project-foundations
         run: |
           uv run mypy src
 
       - name: Pytest
+        working-directory: ML-project-foundations
         run: |
           uv run pytest -v
