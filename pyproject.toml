@@ -26,10 +26,9 @@ dev = [
 ]
 
 # TODO: Make a note in readme about location of clone of data quarry repo
-[project.optional-dependencies]
-CI = [
-  "ml-project-foundations-data-quarry @ git+https://github.com/johanbn89/ML-project-foundations-data-quarry.git@main",
-]
+[tool.uv.sources]
+ml-project-foundations-data-quarry = { path = "../data_quarry/ML-project-foundations-data-quarry" }
+
 
 [build-system]
 requires = ["setuptools>=68,<81"]
