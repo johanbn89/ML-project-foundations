@@ -31,7 +31,6 @@ jobs:
       - name: Sync environment
         working-directory: ML-project-foundations
         run: |
-          uv sync --frozen --all-groups --no-reinstall
           uv sync --frozen --all-groups
 
       - name: Get Python and mypy versions
@@ -55,20 +54,16 @@ jobs:
 
       - name: Ruff
         working-directory: ML-project-foundations
-        run: |
-          uv run ruff check .
+        run: uv run ruff check .
 
       - name: Black
         working-directory: ML-project-foundations
-        run: |
-          uv run black --check .
+        run: uv run black --check .
 
       - name: Mypy
         working-directory: ML-project-foundations
-        run: |
-          uv run mypy src
+        run: uv run mypy src
 
       - name: Pytest
         working-directory: ML-project-foundations
-        run: |
-          uv run pytest -v
+        run: uv run pytest -v
