@@ -4,6 +4,41 @@ This repository demonstrates how to structure a **production-ready, end-to-end m
 
 The focus is not only on models, but on the **infrastructure and engineering practices** that make ML projects maintainable, testable, and scalable over time.
 
+## Repository Setup
+
+### 1. Install `uv`
+
+Follow the installation instructions here:  
+https://astral.sh/uv
+
+### 2. Clone the repository
+```bash
+git clone <repo-url>
+cd ml-project-foundations
+```
+### 3. Install Python and dependencies
+```bash
+python scripts/setup_local.py
+uv sync --all-groups
+```
+setup_local.py install local deps, eg. ml-project-foundations-data-quarry.
+
+Notice that `uv sync`:
+
+- Creates (or reuses) the project virtual environment
+- Ensures a compatible Python version is available (based on `.python-version`), installing it if necessary
+- Installs all dependencies from `pyproject.toml` / `uv.lock`
+- Installs the current project in **editable mode**, meaning:
+  - Changes to the source code are immediately reflected
+  - The package can be imported and run as an installed module from the environment
+
+We can now run eg.
+```bash
+uv run pytest
+uv run mypy src
+uv run python -m ml_project_foundations.some_module
+uv run python -m ml_project_foundations.some_file
+```
 
 ## Project Goals
 
@@ -115,41 +150,6 @@ Most project configuration lives in **`pyproject.toml`**, including:
 
 Centralizing configuration keeps the project easier to reason about and maintain.
 
-## Repository Setup
-
-### 1. Install `uv`
-
-Follow the installation instructions here:  
-https://astral.sh/uv
-
-### 2. Clone the repository
-```bash
-git clone <repo-url>
-cd ml-project-foundations
-```
-### 3. Install Python and dependencies
-```bash
-python scripts/setup_local.py
-uv sync --all-groups
-```
-setup_local.py install local deps, eg. ml-project-foundations-data-quarry.
-
-Notice that `uv sync`:
-
-- Creates (or reuses) the project virtual environment
-- Ensures a compatible Python version is available (based on `.python-version`), installing it if necessary
-- Installs all dependencies from `pyproject.toml` / `uv.lock`
-- Installs the current project in **editable mode**, meaning:
-  - Changes to the source code are immediately reflected
-  - The package can be imported and run as an installed module from the environment
-
-We can now run eg.
-```bash
-uv run pytest
-uv run mypy src
-uv run python -m ml_project_foundations.some_module
-uv run python -m ml_project_foundations.some_file
-```
 
 ## Development Tooling & Project Hygiene
 
