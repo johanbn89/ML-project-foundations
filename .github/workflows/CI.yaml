@@ -31,7 +31,7 @@ jobs:
       - name: Sync environment
         working-directory: ML-project-foundations
         run: |
-          uv sync --frozen --all-groups --no-install 
+          uv sync --frozen --all-groups --no-reinstall
           uv sync --frozen --all-groups
 
       - name: Get Python and mypy versions
