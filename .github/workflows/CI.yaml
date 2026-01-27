@@ -44,10 +44,11 @@ jobs:
       - name: Cache mypy
         uses: actions/cache@v4
         with:
-          path: code/ML-project-foundations/.mypy_cache
-          key: mypy-${{ runner.os }}-py${{ env.PY_VERSION }}-mypy${{ env.MYPY_VERSION }}-${{ hashFiles('code/ML-project-foundations/**/*.py', 'code/ML-project-foundations/pyproject.toml') }}
+          path: ML-project-foundations/.mypy_cache
+          key: mypy-${{ runner.os }}-py${{ env.PY_VERSION }}-mypy${{ env.MYPY_VERSION }}
           restore-keys: |
-            mypy-${{ runner.os }}-py${{ env.PY_VERSION }}-mypy${{ env.MYPY_VERSION }}-
+            mypy-${{ runner.os }}-py${{ env.PY_VERSION }}-
+            mypy-${{ runner.os }}-
 
       - name: Ruff
         working-directory: ML-project-foundations
