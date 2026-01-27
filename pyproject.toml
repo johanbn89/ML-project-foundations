@@ -13,6 +13,7 @@ dependencies = [
    "torchaudio>=2.10.0",
    "torchvision>=0.25.0",
    "typer>=0.21.1",
+   "ml-project-foundations-data-quarry",
 ]
 
 [dependency-groups]
@@ -27,7 +28,7 @@ dev = [
 
 # TODO: Make a note in readme about location of clone of data quarry repo
 [tool.uv.sources]
-ml-project-foundations-data-quarry = { path = "../data_quarry/ML-project-foundations-data-quarry" }
+ml-project-foundations-data-quarry = { path = "../ML-project-foundations-data-quarry" }
 
 
 [build-system]
