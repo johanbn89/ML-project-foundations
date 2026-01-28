@@ -41,6 +41,7 @@ where = ["src"]
 [tool.mypy]
 # If a dependency doesn’t ship type hints, don’t fail my build because of it
 ignore_missing_imports = true
+warn_unused_ignores = false
 disallow_untyped_defs = false
 cache_dir = ".mypy_cache"
 incremental = true
@@ -59,6 +60,7 @@ select = [
 ]
 ignore = [
     "E501",  # line length (handled by black)
+    "E402",
 ]
 
 [tool.ruff.lint.isort]

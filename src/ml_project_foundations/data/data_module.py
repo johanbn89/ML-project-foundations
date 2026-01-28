@@ -1,7 +1,6 @@
-""" """
-
 import warnings
 
+warnings.filterwarnings("ignore", category=UserWarning)
 import lightning as pl
 import pandas as pd
 import torch
@@ -10,8 +9,6 @@ from omegaconf import DictConfig, ListConfig, OmegaConf
 from torch.utils.data import DataLoader, Dataset, random_split
 from torchvision.transforms import Compose
 
-warnings.filterwarnings("ignore")
-
 
 # Dummy dataset class for illustration
 class DummyDataset(Dataset):
@@ -19,7 +16,7 @@ class DummyDataset(Dataset):
         self.cfg = cfg
         self.input = pd.read_csv(data[self.cfg.components[0]][0])
         self.target = pd.read_csv(data[self.cfg.components[1]][0])
-        self.transform = Compose(transform)
+        self.transform = Compose(transform) if transform else []
 
         # print("Shapes:", self.input.shape, self.target.shape)
 

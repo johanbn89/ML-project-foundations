@@ -3,7 +3,7 @@ devices: auto # int, list, or "auto"
 strategy: auto # ddp, fsdp, deepspeed, auto
 precision: 32 # 32, 16, bf16
 
-max_epochs: 5
+max_epochs: 2
 min_epochs: 1
 max_steps: -1 # set >0 to limit by steps instead of epochs
 
@@ -28,4 +28,15 @@ fast_dev_run: false
 overfit_batches: 0.0
 
 # Callbacks
-callbacks: null
+# TODO: fix path of checkpoints, should also log as artifacts. 
+# should log command that started training
+# 
+callbacks:
+  - _target_: lightning.pytorch.callbacks.ModelCheckpoint
+    filename: "epoch-{epoch}"
+    save_last: true
+    save_top_k: -1
+    every_n_epochs: 1
+
+  - _target_: lightning.pytorch.callbacks.LearningRateMonitor
+    logging_interval: step
