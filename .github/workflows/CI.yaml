@@ -12,18 +12,18 @@ jobs:
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           path: ML-project-foundations
 
       - name: Check out data quarry
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: johanbn89/ML-project-foundations-data-quarry
           path: ML-project-foundations-data-quarry
 
       - name: Set up uv
-        uses: astral-sh/setup-uv@v3
+        uses: astral-sh/setup-uv@v7
         with:
           enable-cache: true
           cache-dependency-glob: ML-project-foundations/uv.lock
