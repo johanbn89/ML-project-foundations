@@ -26,8 +26,7 @@ jobs:
         uses: astral-sh/setup-uv@v3
         with:
           enable-cache: true
-          cache-dependency-glob: ML-project-foundations/uv.lock
-
+          
       - name: Sync environment
         working-directory: ML-project-foundations
         run: |
