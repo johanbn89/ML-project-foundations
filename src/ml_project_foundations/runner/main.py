@@ -1,23 +1,17 @@
-"""
-Should we really have mode branching logic in main.py?
-Could just separate into  branching_flags.py or similar.
-"""
-
 import warnings
 
+warnings.filterwarnings("ignore", category=UserWarning)
 import hydra
 import lightning.pytorch as pl
 from hydra.utils import instantiate
 from lightning.pytorch.loggers import MLFlowLogger
 from omegaconf import OmegaConf
 
-warnings.filterwarnings("ignore", category=UserWarning)
-
 
 @hydra.main(version_base=None, config_path="../config", config_name="default")
 def main(cfg):
     print("Starting training with PyTorch Lightning")
-    print("Configuration:\n", OmegaConf.to_yaml(cfg))
+    print("Configuration:\n", OmegaConf.to_yaml(cfg, resolve=True))
     # Think about this later
     # seed_everything(cfg.seed)
 
@@ -29,13 +23,19 @@ def main(cfg):
     if cfg.logger.name == "mlflow":
         logger = MLFlowLogger(
             experiment_name=cfg.logger.experiment_name,
-            tracking_uri=cfg.logger.tracking_uri,  # Should this be env derived?
-            run_id=cfg.logger.run_name,
+            tracking_uri=cfg.logger.tracking_uri,
+            run_name=cfg.logger.run_name,
+            log_model=cfg.logger.log_model,
         )
 
+    # Reconsider this
+    callbacks = [instantiate(c) for c in cfg.trainer.callbacks]
+    trainer_kwargs = OmegaConf.to_container(cfg.trainer, resolve=True)
+    trainer_kwargs.pop("callbacks", None)
     trainer = pl.Trainer(
-        **cfg.trainer,
+        **trainer_kwargs,
         logger=logger,
+        callbacks=callbacks,
     )
 
     if "fit" in cfg.run.stages:

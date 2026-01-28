@@ -1,5 +1,5 @@
 name: mlflow  
-tracking_uri: file:./.local/mlruns
+tracking_uri: file:${hydra:runtime.cwd}/.local/mlruns
 experiment_name: ${experiment.name}
 run_name: ${hydra:run.id}
 log_model: true
