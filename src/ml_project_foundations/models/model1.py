@@ -4,7 +4,7 @@ Example Model 2 definition using PyTorch Lightning.
 
 import lightning.pytorch as pl
 import torch.nn.functional as F
-from omegaconf import DictConfig
+from omegaconf import DictConfig, OmegaConf
 from torch import nn
 from torch.optim import Adam
 
@@ -12,7 +12,9 @@ from torch.optim import Adam
 class Model1(pl.LightningModule):
     def __init__(self, model_cfg: DictConfig):
         super().__init__()
-        self.save_hyperparameters(model_cfg)  # Saves hyperparameters to self.hparams
+        self.save_hyperparameters(
+            OmegaConf.to_container(model_cfg, resolve=True)
+        )  # Saves hyperparameters to self.hparams
         self.layer1 = nn.Linear(model_cfg.input_dim, 64)
         self.layer2 = nn.Linear(64, 32)
         self.output_layer = nn.Linear(32, 1)

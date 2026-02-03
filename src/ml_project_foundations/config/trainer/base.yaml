@@ -28,9 +28,6 @@ fast_dev_run: false
 overfit_batches: 0.0
 
 # Callbacks
-# TODO: fix path of checkpoints, should also log as artifacts. 
-# should log command that started training
-# 
 callbacks:
   - _target_: lightning.pytorch.callbacks.ModelCheckpoint
     filename: "epoch-{epoch}"

@@ -1,6 +1,8 @@
 import warnings
 
 warnings.filterwarnings("ignore", category=UserWarning)
+import sys
+
 import hydra
 import lightning.pytorch as pl
 from hydra.utils import instantiate
@@ -38,8 +40,16 @@ def main(cfg):
         callbacks=callbacks,
     )
 
+    # Log launch traces
+    BASE_CMD = "uv run python -m ml_project_foundations.runner.main"
+    cmd = " ".join([BASE_CMD, *sys.argv[1:]]).strip()
+    client = logger.experiment
+    run_id = logger.run_id
+    client.log_text(run_id, cmd + "\n", "provenance/run_command.txt")
+    client.log_text(run_id, OmegaConf.to_yaml(cfg, resolve=True), "provenance/resolved_config.yaml")
+
     if "fit" in cfg.run.stages:
-        trainer.fit(model, datamodule=datamodule)
+        trainer.fit(model, datamodule=datamodule, ckpt_path=cfg.run.ckpt_path)
 
     if "eval" in cfg.run.stages:
         trainer.validate(

@@ -34,7 +34,7 @@ class DummyDataset(Dataset):
 class DataModule(pl.LightningDataModule):
     def __init__(self, data_cfg: DictConfig | ListConfig):
         super().__init__()
-        self.save_hyperparameters(data_cfg)  # Saves to self.hparams
+        self.save_hyperparameters(OmegaConf.to_container(data_cfg, resolve=True))  # Saves to self.hparams
         self.cfg = data_cfg
 
     def prepare_data(self):
