@@ -1,4 +1,5 @@
 defaults:
+  - hydra
   - experiment: base
   - logger: base
   - model: model1
