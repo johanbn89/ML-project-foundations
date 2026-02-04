@@ -5,11 +5,7 @@ defaults:
   - model: model1
   - data: base
   - trainer: base
+  - run: base
   - _self_
-
-# Missing experiments config, to be added later
-run:
-  stages: [fit]
-  ckpt_path: last   # "last", explicit tag/commit
 
 seed: 42

@@ -1,4 +1,6 @@
-run:
-  stages: [fit]
-  # mode: RUN  ## Added this later
-  ckpt_path: null
+stages: [fit]
+# mode: RUN, PRE-TRAIN etc.  ## Added this later
+
+# state for continue training
+run_id_ckpt: null
+which: null
