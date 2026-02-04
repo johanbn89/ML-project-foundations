@@ -8,11 +8,9 @@ __pycache__/
 # VSCode
 .vscode/
 
-# local development files
-.local/*
-!.local/mlruns/
-.local/mlruns/*
-!.local/mlruns/.gitkeep
+# Local development state
+.local/
+!.local/.gitkeep
 
 # Local installs of uv packages
 uv.toml

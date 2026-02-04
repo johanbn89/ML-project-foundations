@@ -44,19 +44,27 @@ def main(cfg):
 
     # Resume
     ckpt_path = None
-    if cfg.run.ckpt:
-        source_run_id = cfg.run.ckpt
-        which = cfg.run.resume_which  # "last" or "epoch-epoch=3 etc."
+    if cfg.run.run_id_ckpt:
+        source_run_id = cfg.run.run_id_ckpt
+        which = cfg.run.which  # "last" or "epoch-epoch=3 etc."
         artifact_uri = f"runs:/{source_run_id}/model/checkpoints/{which}/{which}.ckpt"
         ckpt_path = mlflow.artifacts.download_artifacts(artifact_uri)
 
-    # Train
     if "fit" in cfg.run.stages:
         trainer.fit(model, datamodule=datamodule, ckpt_path=ckpt_path)
 
         # Log a registry-ready MLflow model package (separate from Lightning checkpoints)
         with mlflow.start_run(run_id=logger.run_id):
             mlflow.pytorch.log_model(model, artifact_path="mlflow_model")
+
+    if "eval" in cfg.run.stages:
+        trainer.validate(model, datamodule=datamodule, ckpt_path=ckpt_path)
+
+    if "test" in cfg.run.stages:
+        trainer.test(model, datamodule=datamodule, ckpt_path=ckpt_path)
+
+    if "predict" in cfg.run.stages:
+        trainer.predict(model, datamodule=datamodule, ckpt_path=ckpt_path)
 
 
 if __name__ == "__main__":
