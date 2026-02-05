@@ -36,7 +36,7 @@ We can now run eg.
 ```bash
 uv run pytest
 uv run mypy src
-uv run python -m ml_project_foundations.runner.main
+uv run python -m ml_project_foundations.runner.main experiment.name=<NAME>
 uv run python -m ml_project_foundations.some_file
 ```
 
@@ -45,10 +45,20 @@ uv run python -m ml_project_foundations.some_file
 The responsibility of this repo is to run machine learning models in various states: training, evaluation, testing, and prediction. The main entry point is:
 
 ```bash
-uv run python -m ml_project_foundations.runner.main
+uv run python -m ml_project_foundations.runner.main experiment.name=<NAME>
 ```
+**Remark:** setting experiment name is enforced.
 
 Most of the control is handled through configuration files. We use **Hydra**, which allows us to merge configs, override them via the CLI, and run multiruns seamlessly.
+
+In some cases we want to continue a run, for that we do:
+
+```bash
+uv run python -m ml_project_foundations.runner.main experiment.name=<NAME> run.ckpt=<run_id> run.which=<last or epoch>
+```
+for **run_id** see mlflow UI and **which** see artifact folder for the correct naming
+
+
 
 ### Data handling
 
