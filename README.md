@@ -36,9 +36,62 @@ We can now run eg.
 ```bash
 uv run pytest
 uv run mypy src
-uv run python -m ml_project_foundations.some_module
+uv run python -m ml_project_foundations.runner.main
 uv run python -m ml_project_foundations.some_file
 ```
+
+## How to use the repo and its core components
+
+The responsibility of this repo is to run machine learning models in various states: training, evaluation, testing, and prediction. The main entry point is:
+
+```bash
+uv run python -m ml_project_foundations.runner.main
+```
+
+Most of the control is handled through configuration files. We use **Hydra**, which allows us to merge configs, override them via the CLI, and run multiruns seamlessly.
+
+### Data handling
+
+The dataset handling layer is implemented directly in this repo (for example, [data_module.py](https://github.com/johanbn89/ML-project-foundations/blob/main/src/ml_project_foundations/data/data_module.py)). The reason for implementing it here is the tight coupling between how data is handled and how the model is trained.
+
+The actual data resolution and access are handled via the ML-project-foundations-data-quarry [repo](https://github.com/johanbn89/ML-project-foundations-data-quarry). More specifically, data is accessed using:
+
+```python
+from data_quarry.tools import get_file_paths
+```
+
+### Experiment tracking and model lifecycle
+
+For experiment tracking and full model lifecycle management, we use MLflow. MLflow provides:
+
+- Lineage (which experiment and run produced a model)
+- Versioning and aliasing
+- Metadata tagging and annotations
+
+This ensures full visibility from development through production deployment.
+
+**Remark:** MLflow now uses aliases for model lineage in the registry; the old stage-based approach is deprecated.
+
+To run MLflow (WIP — currently moving to Azure):
+
+mlflow serve  
+--backend-store-uri <TODO: postgres azure>  
+--default-artifact-root <TODO: artifact storage azure>  
+--host <TODO: azure compute>  
+--port 5000
+
+In the MLflow UI, we can inspect results, compare runs, and promote models (for example to staging, production, or archive).
+
+### Dataset versioning
+
+We do not use MLflow for dataset versioning, for two main reasons:
+
+1. The UI does not clearly showcase dataset lineage separately from models.
+2. MLflow does not track data in a Git-like way.
+
+To address this, we use DVC together with a separate [repo](https://github.com/johanbn89/ML-project-foundations-data-quarry)
+This setup provides a clear UI for dataset lineage, including metadata, data contracts, and tracking, which helps us avoid duplicate data.
+
 
 ## Project Goals
 
