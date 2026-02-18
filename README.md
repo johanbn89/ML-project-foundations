@@ -82,16 +82,6 @@ This ensures full visibility from development through production deployment.
 
 **Remark:** MLflow now uses aliases for model lineage in the registry; the old stage-based approach is deprecated.
 
-To run MLflow (WIP — currently moving to Azure):
-
-mlflow serve  
---backend-store-uri <TODO: postgres azure>  
---default-artifact-root <TODO: artifact storage azure>  
---host <TODO: azure compute>  
---port 5000
-
-In the MLflow UI, we can inspect results, compare runs, and promote models (for example to staging, production, or archive).
-
 ### Dataset versioning
 
 We do not use MLflow for dataset versioning, for two main reasons:
