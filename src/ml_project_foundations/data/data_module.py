@@ -18,8 +18,6 @@ class DummyDataset(Dataset):
         self.target = pd.read_csv(data[self.cfg.components[1]][0])
         self.transform = Compose(transform) if transform else []
 
-        # print("Shapes:", self.input.shape, self.target.shape)
-
     def __len__(self):
         return len(self.input)
 
@@ -88,9 +86,7 @@ if __name__ == "__main__":
     cfg = OmegaConf.load("src/ml_project_foundations/config/data/base.yaml")
     print(OmegaConf.to_yaml(cfg))
 
-    print(cfg.name, cfg.tag, cfg.components)
     data = get_file_paths(dataset=cfg.name, ref=cfg.tag, components=cfg.components)
-    print(data)
 
     data_module = DataModule(cfg)
     data_module.prepare_data()
