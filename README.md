@@ -19,9 +19,7 @@ cd ml-project-foundations
 ### 3. Install Python and dependencies
 ```bash
 uv sync --all-groups
-python scripts/setup_local.py
 ```
-setup_local.py install local deps, eg. ml-project-foundations-data-quarry.
 
 Notice that `uv sync`:
 
