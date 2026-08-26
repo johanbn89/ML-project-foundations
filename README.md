@@ -80,6 +80,22 @@ This ensures full visibility from development through production deployment.
 
 **Remark:** MLflow now uses aliases for model lineage in the registry; the old stage-based approach is deprecated.
 
+#### Shared MLflow for a team
+
+In a collaborative environment, MLflow is normally deployed as a shared service
+in the cloud rather than started on each developer's machine. The deployment
+should use a durable database for tracking metadata and shared object storage for
+artifacts. An administrator configures the service, access control, and storage;
+team members only need to point `MLFLOW_TRACKING_URI` at its URL:
+
+```powershell
+$env:MLFLOW_TRACKING_URI = "https://mlflow.example.com"
+```
+
+This gives the team a common view of experiments, runs, metrics, artifacts, and
+registered models. The local server below is intended for development and
+testing when a shared server is unavailable.
+
 #### Run MLflow locally
 
 Training expects an MLflow tracking server at the URI in `MLFLOW_TRACKING_URI`.
