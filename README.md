@@ -80,6 +80,40 @@ This ensures full visibility from development through production deployment.
 
 **Remark:** MLflow now uses aliases for model lineage in the registry; the old stage-based approach is deprecated.
 
+#### Run MLflow locally
+
+Training expects an MLflow tracking server at the URI in `MLFLOW_TRACKING_URI`.
+For local development, start the server from the repository root in its own
+terminal:
+
+```powershell
+New-Item -ItemType Directory -Force .local\mlflow\artifacts | Out-Null
+
+uv run mlflow server `
+  --host 127.0.0.1 `
+  --port 5000 `
+  --workers 1 `
+  --backend-store-uri "sqlite:///./.local/mlflow/mlflow.db" `
+  --artifacts-destination "./.local/mlflow/artifacts"
+```
+
+Keep that terminal running. The MLflow UI is available at
+[http://localhost:5000](http://localhost:5000), and all local state is stored
+under the Git-ignored `.local/mlflow/` directory.
+
+In a second terminal, configure the client and start a run:
+
+```powershell
+$env:MLFLOW_TRACKING_URI = "http://localhost:5000"
+
+uv run python -m ml_project_foundations.runner.main `
+  experiment.name=my_experiment `
+  trainer.fast_dev_run=true
+```
+
+If the server is not running, training fails with a connection-refused error for
+`localhost:5000`. Stop the server with `Ctrl+C` when it is no longer needed.
+
 ### Dataset versioning
 
 We do not use MLflow for dataset versioning, for two main reasons:
@@ -200,6 +234,25 @@ Most project configuration lives in **`pyproject.toml`**, including:
 - Tooling configuration (uv, black, ruff, mypy, pytest, etc.)
 
 Centralizing configuration keeps the project easier to reason about and maintain.
+
+### Hydra object configuration
+
+Hydra configs that contain `_target_` use flat constructor arguments. Each key
+beside `_target_` is passed directly to the target class:
+
+```yaml
+_target_: ml_project_foundations.models.model1.Model1
+input_dim: 5
+target_dim: 1
+lr: 1e-3
+```
+
+This is equivalent to `Model1(input_dim=5, target_dim=1, lr=1e-3)` and keeps
+application classes independent of `DictConfig`. Select and override a model with:
+
+```bash
+uv run python -m ml_project_foundations.runner.main experiment.name=my_run model=model1 model.lr=5e-4
+```
 
 
 ## Development Tooling & Project Hygiene
