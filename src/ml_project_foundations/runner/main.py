@@ -12,6 +12,11 @@ from hydra.utils import instantiate
 from lightning.pytorch.loggers import MLFlowLogger
 from omegaconf import OmegaConf
 
+for stream in (sys.stdout, sys.stderr):
+    reconfigure = getattr(stream, "reconfigure", None)
+    if reconfigure is not None:
+        reconfigure(errors="replace")
+
 
 @hydra.main(version_base=None, config_path="../config", config_name="default")
 def main(cfg):
@@ -34,7 +39,7 @@ def main(cfg):
     trainer_kwargs.pop("callbacks", None)
     trainer = pl.Trainer(**trainer_kwargs, logger=logger, callbacks=callbacks)
 
-    # Provenance
+    # Provenance, log witch command was used to run this experiment and the resolved config
     BASE_CMD = "uv run python -m ml_project_foundations.runner.main"
     cmd = " ".join([BASE_CMD, *sys.argv[1:]]).strip()
     client = logger.experiment
@@ -55,7 +60,7 @@ def main(cfg):
 
         # Log a registry-ready MLflow model package (separate from Lightning checkpoints)
         with mlflow.start_run(run_id=logger.run_id):
-            mlflow.pytorch.log_model(model, artifact_path="mlflow_model")
+            mlflow.pytorch.log_model(model, name="mlflow_model")
 
     if "eval" in cfg.run.stages:
         trainer.validate(model, datamodule=datamodule, ckpt_path=ckpt_path)
